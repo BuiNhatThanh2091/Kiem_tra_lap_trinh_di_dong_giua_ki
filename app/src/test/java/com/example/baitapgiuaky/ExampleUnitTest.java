@@ -1,4 +1,4 @@
-package com.example.kiem_tra_giua_ki_di_dong;
+package com.example.baitapgiuaky;
 
 import org.junit.Test;
 

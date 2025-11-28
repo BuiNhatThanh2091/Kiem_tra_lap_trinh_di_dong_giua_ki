@@ -1,9 +1,9 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.Kiem_tra_giua_ki_di_dong" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="Base.Theme.Baitapgiuaky" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
 
-    <style name="Theme.Kiem_tra_giua_ki_di_dong" parent="Base.Theme.Kiem_tra_giua_ki_di_dong" />
+    <style name="Theme.Baitapgiuaky" parent="Base.Theme.Baitapgiuaky" />
 </resources>

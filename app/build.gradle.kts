@@ -3,13 +3,13 @@ plugins {
 }
 
 android {
-    namespace = "com.example.kiem_tra_giua_ki_di_dong"
+    namespace = "com.example.baitapgiuaky"
     compileSdk {
         version = release(36)
     }
 
     defaultConfig {
-        applicationId = "com.example.kiem_tra_giua_ki_di_dong"
+        applicationId = "com.example.baitapgiuaky"
         minSdk = 24
         targetSdk = 36
         versionCode = 1

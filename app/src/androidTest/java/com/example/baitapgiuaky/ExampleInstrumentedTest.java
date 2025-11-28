@@ -1,4 +1,4 @@
-package com.example.kiem_tra_giua_ki_di_dong;
+package com.example.baitapgiuaky;
 
 import android.content.Context;
 
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("com.example.kiem_tra_giua_ki_di_dong", appContext.getPackageName());
+        assertEquals("com.example.baitapgiuaky", appContext.getPackageName());
     }
 }

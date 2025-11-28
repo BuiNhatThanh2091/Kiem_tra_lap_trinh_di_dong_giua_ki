@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/primary_color"
+    android:gravity="center"
+    android:padding="32dp">
+
+    <!-- Logo -->
+    <ImageView
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:src="@drawable/logo"
+        android:layout_marginBottom="32dp"/>
+
+    <!-- App Title -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/eat_and_order"
+        android:textSize="32sp"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        android:layout_marginBottom="16dp"/>
+
+    <!-- Subtitle -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Đặt món ngon, giao tận nơi"
+        android:textSize="16sp"
+        android:textColor="@android:color/white"
+        android:alpha="0.8"
+        android:layout_marginBottom="48dp"/>
+
+    <!-- Welcome Message -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Chào mừng bạn đến với ứng dụng đặt món ăn hàng đầu!"
+        android:textSize="18sp"
+        android:textColor="@android:color/white"
+        android:textAlignment="center"
+        android:layout_marginBottom="32dp"/>
+
+    <!-- Start Button -->
+    <Button
+        android:id="@+id/btn_start"
+        android:layout_width="200dp"
+        android:layout_height="56dp"
+        android:text="Bắt đầu"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:background="@drawable/circle_background"
+        android:backgroundTint="@android:color/white"
+        android:textColor="@color/primary_color"
+        android:layout_marginTop="16dp"/>
+
+    <!-- Footer Text -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hãy khám phá thế giới ẩm thực cùng chúng tôi!"
+        android:textSize="14sp"
+        android:textColor="@android:color/white"
+        android:alpha="0.7"
+        android:layout_marginTop="32dp"/>
+
+</LinearLayout>

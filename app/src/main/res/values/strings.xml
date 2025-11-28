@@ -16,4 +16,9 @@
     <string name="nav_profile">Profile</string>
     <string name="nav_support">Support</string>
     <string name="nav_settings">Settings</string>
+    <string name="nav_home_desc">Trang chủ</string>
+    <string name="nav_profile_desc">Hồ sơ</string>
+    <string name="nav_support_desc">Hỗ trợ</string>
+    <string name="nav_settings_desc">Cài đặt</string>
+    <string name="nav_cart">Giỏ hàng</string>
 </resources>

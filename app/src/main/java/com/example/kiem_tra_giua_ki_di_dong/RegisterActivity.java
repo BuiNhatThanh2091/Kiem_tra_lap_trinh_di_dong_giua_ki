@@ -24,15 +24,15 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        etFullName = findViewById(R.id.et_full_name);
-        etEmail = findViewById(R.id.et_email);
-        etPassword = findViewById(R.id.et_password);
-        etConfirmPassword = findViewById(R.id.et_confirm_password);
-        etPhone = findViewById(R.id.et_phone);
-        btnRegister = findViewById(R.id.btn_register);
+        etFullName = findViewById(R.id.etFullName);
+        etEmail = findViewById(R.id.etEmail);
+        etPassword = findViewById(R.id.etPassword);
+        etConfirmPassword = findViewById(R.id.etConfirmPassword);
+        etPhone = findViewById(R.id.etPhone);
+        btnRegister = findViewById(R.id.btnRegister);
 
         // Back to login button
-        findViewById(R.id.tv_login).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.tvSignIn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
@@ -49,7 +49,10 @@ public class RegisterActivity extends AppCompatActivity {
                 String phone = etPhone.getText().toString().trim();
 
                 if (validateInput(fullName, email, password, confirmPassword, phone)) {
-                    // Send OTP to phone
+                    // Simulate sending OTP
+                    Toast.makeText(RegisterActivity.this, "Đang gửi mã... OTP của bạn là: 123456", Toast.LENGTH_LONG).show();
+
+                    // Navigate to OTP verification screen
                     Intent intent = new Intent(RegisterActivity.this, OtpVerificationActivity.class);
                     intent.putExtra("fullName", fullName);
                     intent.putExtra("email", email);
@@ -64,30 +67,42 @@ public class RegisterActivity extends AppCompatActivity {
     private boolean validateInput(String fullName, String email, String password, String confirmPassword, String phone) {
         if (fullName.isEmpty()) {
             etFullName.setError("Vui lòng nhập họ tên");
+            etFullName.requestFocus();
             return false;
         }
         if (email.isEmpty()) {
             etEmail.setError("Vui lòng nhập email");
-            return false;
-        }
-        if (password.isEmpty()) {
-            etPassword.setError("Vui lòng nhập mật khẩu");
-            return false;
-        }
-        if (password.length() < 6) {
-            etPassword.setError("Mật khẩu phải có ít nhất 6 ký tự");
-            return false;
-        }
-        if (!password.equals(confirmPassword)) {
-            etConfirmPassword.setError("Mật khẩu xác nhận không khớp");
+            etEmail.requestFocus();
             return false;
         }
         if (phone.isEmpty()) {
             etPhone.setError("Vui lòng nhập số điện thoại");
+            etPhone.requestFocus();
             return false;
         }
         if (phone.length() < 10) {
             etPhone.setError("Số điện thoại không hợp lệ");
+            etPhone.requestFocus();
+            return false;
+        }
+        if (password.isEmpty()) {
+            etPassword.setError("Vui lòng nhập mật khẩu");
+            etPassword.requestFocus();
+            return false;
+        }
+        if (password.length() < 6) {
+            etPassword.setError("Mật khẩu phải có ít nhất 6 ký tự");
+            etPassword.requestFocus();
+            return false;
+        }
+        if (confirmPassword.isEmpty()) {
+            etConfirmPassword.setError("Vui lòng xác nhận mật khẩu");
+            etConfirmPassword.requestFocus();
+            return false;
+        }
+        if (!password.equals(confirmPassword)) {
+            etConfirmPassword.setError("Mật khẩu xác nhận không khớp");
+            etConfirmPassword.requestFocus();
             return false;
         }
         return true;

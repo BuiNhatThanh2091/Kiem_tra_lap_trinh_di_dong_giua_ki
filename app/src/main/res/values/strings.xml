@@ -1,3 +1,19 @@
 <resources>
     <string name="app_name">Kiem_tra_giua_ki_di_dong</string>
+    <string name="welcome">Xin chào, %1$s</string>
+    <string name="eat_and_order">Eat &amp; Order</string>
+    <string name="user_image_desc">Ảnh người dùng</string>
+    <string name="search_hint">Tìm kiếm món ăn, quán…</string>
+    <string name="shipper_desc">Hình shipper</string>
+    <string name="banner_title">Miễn ship</string>
+    <string name="banner_date">14/2 - 28/2</string>
+    <string name="btn_order_text">Đặt ngay</string>
+    <string name="categories">Danh mục</string>
+    <string name="last_product">Sản phẩm mới</string>
+
+    <!-- Bottom navigation labels -->
+    <string name="nav_home">Home</string>
+    <string name="nav_profile">Profile</string>
+    <string name="nav_support">Support</string>
+    <string name="nav_settings">Settings</string>
 </resources>

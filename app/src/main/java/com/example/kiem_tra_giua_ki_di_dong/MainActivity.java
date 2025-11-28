@@ -1,12 +1,15 @@
 package com.example.kiem_tra_giua_ki_di_dong;
 
 import android.os.Bundle;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -20,5 +23,14 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        
+        TextView tvGreeting = findViewById(R.id.tv_greeting);
+        TextView tvAppName = findViewById(R.id.tv_app_name);
+        ImageView imgUser = findViewById(R.id.img_user);
+
+        String userName = "Trung";
+        tvGreeting.setText(getString(R.string.welcome, userName));
+        tvAppName.setText(R.string.eat_and_order);
+        imgUser.setImageResource(R.drawable.pro_trung);
     }
 }

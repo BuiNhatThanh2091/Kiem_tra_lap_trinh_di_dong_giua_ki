@@ -1,36 +1,60 @@
-package com.example.kiem_tra_giua_ki_di_dong;
+package com.example.kiem_tra_giua_ki_di_dong.model;
 
-import java.util.List;
+public class User {
+    private int userId;
+    private String fullName;
+    private String email;
+    private String phoneNumber;
+    private String address;
 
-import retrofit2.Call;
-import retrofit2.http.Body;
-import retrofit2.http.GET;
-import retrofit2.http.POST;
-import retrofit2.http.Path;
+    public User() {
+    }
 
-public interface ApiService {
+    public User(int userId, String fullName, String email, String phoneNumber, String address) {
+        this.userId = userId;
+        this.fullName = fullName;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.address = address;
+    }
 
-    // 1. Lấy tất cả category món ăn
-    @GET("api/categories")
-    Call<List<Category>> getAllCategories();
+    public int getUserId() {
+        return userId;
+    }
 
-    // 2. Lấy danh sách sản phẩm theo category
-    @GET("api/products/by-category/{categoryId}")
-    Call<List<Product>> getProductsByCategory(@Path("categoryId") int categoryId);
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
 
-    // 3. Đăng ký
-    @POST("api/auth/register")
-    Call<ApiMessage> register(@Body RegisterRequest request);
+    public String getFullName() {
+        return fullName;
+    }
 
-    // 4. Đăng nhập
-    @POST("api/auth/login")
-    Call<LoginResponse> login(@Body LoginRequest request);
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
 
-    // 5. Đăng xuất
-    @POST("api/auth/logout")
-    Call<ApiMessage> logout();
+    public String getEmail() {
+        return email;
+    }
 
-    // 6. Lấy profile user theo userId
-    @GET("api/profile/{userId}")
-    Call<User> getProfile(@Path("userId") int userId);
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
 }

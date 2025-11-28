@@ -1,4 +1,4 @@
-package com.example.kiem_tra_giua_ki_di_dong;
+package com.example.kiem_tra_giua_ki_di_dong.model;
 
 public class Product {
     private int id;

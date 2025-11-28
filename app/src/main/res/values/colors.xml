@@ -2,4 +2,18 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="orange">#D03506</color>
+    <color name="gray">#A3FFFFFF</color>
+    <color name="textPrimary">@color/black</color>
+    <color name="red">#DC0E0E</color>
+    <color name="yellow">#FFEB3B</color>
+    <color name="primary_color">#FF6200EE</color>
+    <color name="purple_500">#6200EE</color>
+
+    <!-- Additional colors for Product List -->
+    <color name="background_light">#FAFAFA</color>
+    <color name="text_primary">#212121</color>
+    <color name="text_secondary">#757575</color>
+    <color name="border_light">#E0E0E0</color>
+
 </resources>

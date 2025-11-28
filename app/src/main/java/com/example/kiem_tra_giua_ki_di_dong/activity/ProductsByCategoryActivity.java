@@ -1,5 +1,5 @@
 //<!--Dao Tuan Duy - 23162011-->
-package com.example.kiem_tra_giua_ki_di_dong;
+package com.example.kiem_tra_giua_ki_di_dong.activity;
 
 import android.os.Bundle;
 import android.view.View;
@@ -14,18 +14,19 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.chip.Chip;
-import com.google.android.material.chip.ChipGroup;
+import com.example.kiem_tra_giua_ki_di_dong.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import adapter.CategoryAdapter;
-import adapter.ProductAdapter;
-import api.ApiService;
-import api.RetrofitClient;
-import model.Category;
-import model.Product;
+import com.example.kiem_tra_giua_ki_di_dong.adapter.CategoryAdapter;
+import com.example.kiem_tra_giua_ki_di_dong.adapter.ProductAdapter;
+import com.example.kiem_tra_giua_ki_di_dong.model.Category;
+import com.example.kiem_tra_giua_ki_di_dong.model.Product;
+import com.example.kiem_tra_giua_ki_di_dong.remote.ApiService;
+import com.example.kiem_tra_giua_ki_di_dong.remote.ApiClient;
+
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -107,7 +108,9 @@ public class ProductsByCategoryActivity extends AppCompatActivity {
         // Hiển thị loading
         progressBar.setVisibility(View.VISIBLE);
 
-        ApiService apiService = RetrofitClient.getInstance().create(ApiService.class);
+//        ApiService apiService = RetrofitClient.getInstance().create(ApiService.class);
+        ApiService apiService = ApiClient.getApiService();
+
 
         Call<List<Category>> call = apiService.getAllCategories();
         call.enqueue(new Callback<List<Category>>() {
@@ -185,7 +188,9 @@ public class ProductsByCategoryActivity extends AppCompatActivity {
         // Nếu đổi category hoặc load lần đầu
         if (clearList || currentCategoryId != categoryId) {
             // Reset và load tất cả products từ API
-            ApiService apiService = RetrofitClient.getInstance().create(ApiService.class);
+//            ApiService apiService = RetrofitClient.getInstance().create(ApiService.class);
+            ApiService apiService = ApiClient.getApiService();
+
             Call<List<Product>> call = apiService.getProductsByCategory(categoryId);
 
             call.enqueue(new Callback<List<Product>>() {

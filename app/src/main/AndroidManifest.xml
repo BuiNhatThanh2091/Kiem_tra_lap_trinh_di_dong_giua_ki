@@ -18,7 +18,7 @@
         
         <!-- Intro Activity - Launch Activity -->
         <activity
-            android:name=".IntroActivity"
+            android:name=".LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,9 +27,9 @@
         </activity>
         
         <!-- Login Activity -->
-        <activity
-            android:name=".LoginActivity"
-            android:exported="false" />
+<!--        <activity-->
+<!--            android:name=".LoginActivity"-->
+<!--            android:exported="false" />-->
         
         <!-- Register Activity -->
         <activity
@@ -39,6 +39,11 @@
         <!-- OTP Verification Activity -->
         <activity
             android:name=".OtpVerificationActivity"
+            android:exported="false" />
+
+        <!-- Forgot Password Activity -->
+        <activity
+            android:name=".ForgotPasswordActivity"
             android:exported="false" />
         
         <!-- Main Activity -->

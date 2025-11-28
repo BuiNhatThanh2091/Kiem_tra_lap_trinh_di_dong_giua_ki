@@ -10,7 +10,15 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.kiem_tra_giua_ki_di_dong.R;
+import com.example.kiem_tra_giua_ki_di_dong.model.LoginRequest;
+import com.example.kiem_tra_giua_ki_di_dong.model.LoginResponse;
+import com.example.kiem_tra_giua_ki_di_dong.remote.ApiClient;
+import com.example.kiem_tra_giua_ki_di_dong.remote.ApiService;
 import com.google.android.material.textfield.TextInputEditText;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -20,54 +28,104 @@ public class LoginActivity extends AppCompatActivity {
     private Button btnLogin;
     private TextView tvSignUp;
 
+    private ApiService apiService;   // dùng để gọi API
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        // Nếu đã đăng nhập rồi thì vào thẳng Home
+        boolean isLoggedIn = getSharedPreferences("UserSession", MODE_PRIVATE)
+                .getBoolean("isLoggedIn", false);
+        if (isLoggedIn) {
+            startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+            finish();
+            return;
+        }
+
+        // Ánh xạ view
         etEmail = findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.etPassword);
         tvForgotPassword = findViewById(R.id.tvForgotPassword);
         btnLogin = findViewById(R.id.btnLogin);
         tvSignUp = findViewById(R.id.tvSignUp);
 
-        btnLogin.setOnClickListener(new View.OnClickListener() {
+        // Khởi tạo ApiService
+        apiService = ApiClient.getApiService();
+
+        // Xử lý nút Login
+        btnLogin.setOnClickListener(v -> {
+            String email = etEmail.getText() != null ? etEmail.getText().toString().trim() : "";
+            String password = etPassword.getText() != null ? etPassword.getText().toString().trim() : "";
+
+            if (email.isEmpty()) {
+                etEmail.setError("Vui lòng nhập email");
+                return;
+            }
+            if (password.isEmpty()) {
+                etPassword.setError("Vui lòng nhập mật khẩu");
+                return;
+            }
+
+            doLogin(email, password);
+        });
+
+        // Quên mật khẩu (tạm thời để Toast)
+        tvForgotPassword.setOnClickListener(v ->
+                Toast.makeText(LoginActivity.this, "Chức năng quên mật khẩu!", Toast.LENGTH_SHORT).show()
+        );
+
+        // Đi tới màn đăng ký
+        tvSignUp.setOnClickListener(v -> {
+            Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+            startActivity(intent);
+        });
+    }
+
+    private void doLogin(String email, String password) {
+        // Tạo body gửi lên API
+        LoginRequest request = new LoginRequest(email, password);
+
+        // Gọi API
+        apiService.login(request).enqueue(new Callback<LoginResponse>() {
             @Override
-            public void onClick(View v) {
-                String email = etEmail.getText().toString();
-                String password = etPassword.getText().toString();
-                if (email.isEmpty() || password.isEmpty()) {
-                    Toast.makeText(LoginActivity.this, "Vui lòng nhập đầy đủ thông tin!", Toast.LENGTH_SHORT).show();
+            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    LoginResponse loginResponse = response.body();
+
+                    // Ở đây mình giả định: userId > 0 nghĩa là đăng nhập thành công
+                    if (loginResponse.getUserId() > 0) {
+                        Toast.makeText(LoginActivity.this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
+
+                        // Lưu trạng thái đăng nhập
+                        getSharedPreferences("UserSession", MODE_PRIVATE)
+                                .edit()
+                                .putBoolean("isLoggedIn", true)
+                                .putInt("userId", loginResponse.getUserId())
+                                .putString("fullName", loginResponse.getFullName())
+                                .putString("email", loginResponse.getEmail())
+                                .apply();
+
+                        // Điều hướng sang HomeActivity
+                        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        // Nếu backend trả message lỗi
+                        String msg = loginResponse.getMessage() != null
+                                ? loginResponse.getMessage()
+                                : "Email hoặc mật khẩu không đúng";
+                        Toast.makeText(LoginActivity.this, msg, Toast.LENGTH_SHORT).show();
+                    }
                 } else {
-                    // TODO: Call API to login
-                    Toast.makeText(LoginActivity.this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
-
-                    // Save login state
-                    getSharedPreferences("UserSession", MODE_PRIVATE)
-                            .edit()
-                            .putBoolean("isLoggedIn", true)
-                            .apply();
-
-                    // Navigate to MainActivity
-                    Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                    startActivity(intent);
-                    finish();
+                    Toast.makeText(LoginActivity.this, "Đăng nhập thất bại! Kiểm tra lại thông tin.", Toast.LENGTH_SHORT).show();
                 }
             }
-        });
 
-        tvForgotPassword.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                Toast.makeText(LoginActivity.this, "Chức năng quên mật khẩu!", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        tvSignUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
-                startActivity(intent);
+            public void onFailure(Call<LoginResponse> call, Throwable t) {
+                Toast.makeText(LoginActivity.this, "Lỗi kết nối: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

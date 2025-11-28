@@ -1,9 +1,9 @@
-//<!--Dao Tuan Duy - 23162011-->
+// <!--Dao Tuan Duy - 23162011-->
 package com.example.kiem_tra_giua_ki_di_dong.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,8 +21,9 @@ import com.example.kiem_tra_giua_ki_di_dong.adapter.CategoryAdapter;
 import com.example.kiem_tra_giua_ki_di_dong.adapter.ProductHorizontalAdapter;
 import com.example.kiem_tra_giua_ki_di_dong.model.Category;
 import com.example.kiem_tra_giua_ki_di_dong.model.Product;
-import com.example.kiem_tra_giua_ki_di_dong.remote.ApiService;
+import com.example.kiem_tra_giua_ki_di_dong.model.User;
 import com.example.kiem_tra_giua_ki_di_dong.remote.ApiClient;
+import com.example.kiem_tra_giua_ki_di_dong.remote.ApiService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +42,10 @@ public class HomeActivity extends AppCompatActivity {
     private List<Category> categories = new ArrayList<>();
     private List<Product> lastProducts = new ArrayList<>();
 
+    private TextView tvGreeting;
+    private TextView tvAppName;
+    private ImageView imgUser;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,25 +58,90 @@ public class HomeActivity extends AppCompatActivity {
             return insets;
         });
 
+        // Nếu chưa đăng nhập thì đá về Login luôn cho chắc
+        boolean isLoggedIn = getSharedPreferences("UserSession", MODE_PRIVATE)
+                .getBoolean("isLoggedIn", false);
+        if (!isLoggedIn) {
+            startActivity(new Intent(HomeActivity.this, LoginActivity.class));
+            finish();
+            return;
+        }
+
         initViews();
         setupRecyclerViews();
         initApiService();
+        loadUserProfile();   // lấy tên từ cache + API
         loadData();
     }
 
     private void initViews() {
-        TextView tvGreeting = findViewById(R.id.tv_greeting);
-        TextView tvAppName = findViewById(R.id.tv_app_name);
-        ImageView imgUser = findViewById(R.id.img_user);
+        tvGreeting = findViewById(R.id.tv_greeting);
+        tvAppName = findViewById(R.id.tv_app_name);
+        imgUser = findViewById(R.id.img_user);
         rvCategories = findViewById(R.id.rv_categories);
         rvLastProducts = findViewById(R.id.rv_last_products);
 
-        String userName = "Trung"; // sau này có thể lấy từ SharedPreferences
-        tvGreeting.setText(getString(R.string.welcome, userName));
+        // Text mặc định trước khi có tên
+        tvGreeting.setText(getString(R.string.welcome, "bạn"));
         tvAppName.setText(R.string.eat_and_order);
         imgUser.setImageResource(R.drawable.pro_trung);
 
         setupBottomNavigation();
+    }
+
+    // ====== LẤY TÊN NGƯỜI DÙNG TỪ SHARED PREFERENCES + API ======
+    private void loadUserProfile() {
+        SharedPreferences prefs = getSharedPreferences("UserSession", MODE_PRIVATE);
+
+        int userId = prefs.getInt("userId", -1);
+        String cachedName = prefs.getString("fullName", null);
+
+        // 1. Hiển thị ngay tên cache (nếu có) để UI đỡ trống
+        if (cachedName != null && !cachedName.isEmpty()) {
+            tvGreeting.setText(getString(R.string.welcome, cachedName));
+        } else {
+            tvGreeting.setText(getString(R.string.welcome, "bạn"));
+        }
+
+        // 2. Nếu không có userId thì không gọi API được
+        if (userId == -1) return;
+
+        // Đảm bảo apiService đã được khởi tạo
+        if (apiService == null) {
+            apiService = ApiClient.getApiService();
+        }
+
+        // 3. Gọi API getProfile để cập nhật tên mới nhất
+        apiService.getProfile(userId).enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    User user = response.body();
+                    String name = user.getFullName();  // đảm bảo User có getFullName()
+
+                    if (name == null || name.trim().isEmpty()) {
+                        name = "bạn";
+                    }
+
+                    // Cập nhật UI
+                    tvGreeting.setText(getString(R.string.welcome, name));
+
+                    // Lưu lại cache
+                    prefs.edit()
+                            .putString("fullName", name)
+                            .apply();
+                } else {
+                    // Không cần báo lỗi ầm ĩ, tránh làm phiền user
+                    // Toast.makeText(HomeActivity.this, "Không lấy được thông tin người dùng", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                // Thất bại thì vẫn dùng tên cache, không cần Toast cũng được
+                // Toast.makeText(HomeActivity.this, "Lỗi kết nối: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void setupBottomNavigation() {
@@ -95,7 +165,6 @@ public class HomeActivity extends AppCompatActivity {
                 .setTitle("Đăng xuất")
                 .setMessage("Bạn có chắc chắn muốn đăng xuất?")
                 .setPositiveButton("Đăng xuất", (dialog, which) -> {
-                    // Clear login state
                     getSharedPreferences("UserSession", MODE_PRIVATE)
                             .edit()
                             .clear()
@@ -116,12 +185,10 @@ public class HomeActivity extends AppCompatActivity {
                 new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         rvCategories.setLayoutManager(categoryLayoutManager);
 
-        // Truyền listener đúng với interface trong CategoryAdapter
         categoryAdapter = new CategoryAdapter(
                 this,
                 categories,
                 (category, position) -> {
-                    // Khi click vào category -> mở màn danh sách sản phẩm theo category
                     Intent intent = new Intent(HomeActivity.this, ProductsByCategoryActivity.class);
                     intent.putExtra("categoryId", category.getId());
                     intent.putExtra("categoryName", category.getName());

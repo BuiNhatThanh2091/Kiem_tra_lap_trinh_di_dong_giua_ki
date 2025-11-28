@@ -3,8 +3,6 @@ package com.example.kiem_tra_giua_ki_di_dong;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,7 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class OtpVerificationActivity extends AppCompatActivity {
 
-    private EditText etOtp1, etOtp2, etOtp3, etOtp4, etOtp5, etOtp6;
+    private EditText etOtp;
     private Button btnVerify;
     private TextView tvResend, tvTimer, tvPhoneNumber;
     private String fullName, email, password, phone;
@@ -34,48 +32,24 @@ public class OtpVerificationActivity extends AppCompatActivity {
         phone = getIntent().getStringExtra("phone");
 
         initViews();
-        setupOtpInputs();
         setupListeners();
         startTimer();
 
         // Display masked phone number
-        String maskedPhone = phone.substring(0, 3) + "***" + phone.substring(phone.length() - 3);
-        tvPhoneNumber.setText("Mã OTP đã được gửi đến " + maskedPhone);
+        if (phone != null && phone.length() > 6) {
+            String maskedPhone = phone.substring(0, 3) + "***" + phone.substring(phone.length() - 3);
+            tvPhoneNumber.setText("Mã OTP đã được gửi đến " + maskedPhone);
+        } else {
+            tvPhoneNumber.setText("Mã OTP đã được gửi đến số điện thoại của bạn");
+        }
     }
 
     private void initViews() {
-        etOtp1 = findViewById(R.id.et_otp_1);
-        etOtp2 = findViewById(R.id.et_otp_2);
-        etOtp3 = findViewById(R.id.et_otp_3);
-        etOtp4 = findViewById(R.id.et_otp_4);
-        etOtp5 = findViewById(R.id.et_otp_5);
-        etOtp6 = findViewById(R.id.et_otp_6);
-        btnVerify = findViewById(R.id.btn_verify);
-        tvResend = findViewById(R.id.tv_resend);
-        tvTimer = findViewById(R.id.tv_timer);
-        tvPhoneNumber = findViewById(R.id.tv_phone_number);
-    }
-
-    private void setupOtpInputs() {
-        EditText[] otpInputs = {etOtp1, etOtp2, etOtp3, etOtp4, etOtp5, etOtp6};
-        
-        for (int i = 0; i < otpInputs.length; i++) {
-            final int index = i;
-            otpInputs[i].addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    if (s.length() == 1 && index < otpInputs.length - 1) {
-                        otpInputs[index + 1].requestFocus();
-                    }
-                }
-
-                @Override
-                public void afterTextChanged(Editable s) {}
-            });
-        }
+        etOtp = findViewById(R.id.etOtp);
+        btnVerify = findViewById(R.id.btnVerify);
+        tvResend = findViewById(R.id.tvResend);
+        tvTimer = findViewById(R.id.tvTimer);
+        tvPhoneNumber = findViewById(R.id.tvPhoneNumber);
     }
 
     private void setupListeners() {
@@ -103,17 +77,11 @@ public class OtpVerificationActivity extends AppCompatActivity {
     }
 
     private String getEnteredOtp() {
-        return etOtp1.getText().toString() +
-               etOtp2.getText().toString() +
-               etOtp3.getText().toString() +
-               etOtp4.getText().toString() +
-               etOtp5.getText().toString() +
-               etOtp6.getText().toString();
+        return etOtp.getText().toString().trim();
     }
 
     private void verifyOtp(String otp) {
         // For demo purposes, accept "123456" as valid OTP
-        // In real implementation, call API to verify OTP
         if ("123456".equals(otp)) {
             Toast.makeText(this, "Xác thực thành công!", Toast.LENGTH_SHORT).show();
             
@@ -132,24 +100,19 @@ public class OtpVerificationActivity extends AppCompatActivity {
     }
 
     private void clearOtpInputs() {
-        etOtp1.setText("");
-        etOtp2.setText("");
-        etOtp3.setText("");
-        etOtp4.setText("");
-        etOtp5.setText("");
-        etOtp6.setText("");
-        etOtp1.requestFocus();
+        etOtp.setText("");
+        etOtp.requestFocus();
     }
 
     private void resendOtp() {
-        // TODO: Call API to resend OTP
-        Toast.makeText(this, "Đã gửi lại mã OTP", Toast.LENGTH_SHORT).show();
+        // Simulate resending OTP
+        Toast.makeText(this, "Đã gửi lại mã. OTP của bạn là: 123456", Toast.LENGTH_LONG).show();
     }
 
     private void startTimer() {
         isTimerRunning = true;
-        tvResend.setEnabled(false);
-        tvResend.setTextColor(getColor(android.R.color.darker_gray));
+        tvResend.setVisibility(View.GONE);
+        tvTimer.setVisibility(View.VISIBLE);
         
         countDownTimer = new CountDownTimer(60000, 1000) {
             @Override
@@ -160,9 +123,8 @@ public class OtpVerificationActivity extends AppCompatActivity {
             @Override
             public void onFinish() {
                 isTimerRunning = false;
-                tvTimer.setText("");
-                tvResend.setEnabled(true);
-                tvResend.setTextColor(getColor(R.color.primary_color));
+                tvTimer.setVisibility(View.GONE);
+                tvResend.setVisibility(View.VISIBLE);
             }
         }.start();
     }

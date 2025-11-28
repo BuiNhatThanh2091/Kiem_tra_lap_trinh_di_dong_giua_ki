@@ -6,6 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.example.kiem_tra_giua_ki_di_dong.model.Category;
+import com.example.kiem_tra_giua_ki_di_dong.model.Product;
+
 import java.util.ArrayList;
 import java.util.List;
 

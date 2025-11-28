@@ -1,4 +1,4 @@
-package com.example.kiem_tra_giua_ki_di_dong;
+package com.example.kiem_tra_giua_ki_di_dong.activity;
 
 import android.os.Bundle;
 import android.widget.ImageView;
@@ -9,6 +9,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import com.example.kiem_tra_giua_ki_di_dong.R;
 
 
 public class MainActivity extends AppCompatActivity {

@@ -1,36 +1,79 @@
-package com.example.kiem_tra_giua_ki_di_dong;
+package com.example.kiem_tra_giua_ki_di_dong.model;
 
-import java.util.List;
+public class User {
+    private int id;
+    private String fullName;
+    private String email;
+    private String password;
+    private String role;
+    private String createdAt;
 
-import retrofit2.Call;
-import retrofit2.http.Body;
-import retrofit2.http.GET;
-import retrofit2.http.POST;
-import retrofit2.http.Path;
+    // Constructor đầy đủ
+    public User(int id, String fullName, String email, String password, String role, String createdAt) {
+        this.id = id;
+        this.fullName = fullName;
+        this.email = email;
+        this.password = password;
+        this.role = role;
+        this.createdAt = createdAt;
+    }
 
-public interface ApiService {
+    // Constructor không có id (khi tạo mới)
+    public User(String fullName, String email, String password, String role, String createdAt) {
+        this.fullName = fullName;
+        this.email = email;
+        this.password = password;
+        this.role = role;
+        this.createdAt = createdAt;
+    }
 
-    // 1. Lấy tất cả category món ăn
-    @GET("api/categories")
-    Call<List<Category>> getAllCategories();
+    // Getter & Setter
 
-    // 2. Lấy danh sách sản phẩm theo category
-    @GET("api/products/by-category/{categoryId}")
-    Call<List<Product>> getProductsByCategory(@Path("categoryId") int categoryId);
+    public int getId() {
+        return id;
+    }
 
-    // 3. Đăng ký
-    @POST("api/auth/register")
-    Call<ApiMessage> register(@Body RegisterRequest request);
+    public void setId(int id) {
+        this.id = id;
+    }
 
-    // 4. Đăng nhập
-    @POST("api/auth/login")
-    Call<LoginResponse> login(@Body LoginRequest request);
+    public String getFullName() {
+        return fullName;
+    }
 
-    // 5. Đăng xuất
-    @POST("api/auth/logout")
-    Call<ApiMessage> logout();
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
 
-    // 6. Lấy profile user theo userId
-    @GET("api/profile/{userId}")
-    Call<User> getProfile(@Path("userId") int userId);
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
+    }
 }

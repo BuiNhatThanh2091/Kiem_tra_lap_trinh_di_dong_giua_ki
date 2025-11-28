@@ -9,6 +9,7 @@
     android:background="#FFFFFF"
     tools:context=".MainActivity">
 
+    <!-- Main UI: 23162101 - Nguyen Quoc Tinh -->
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nested_scroll_view"
         android:layout_width="match_parent"
@@ -103,7 +104,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="180dp"
                 android:layout_margin="16dp"
-                android:background="#FFCC80"
+                android:background="@drawable/banner_background"
                 android:padding="16dp">
 
                 <ImageView
@@ -201,6 +202,7 @@
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
+    <!-- 23162091 - Bui Nhat Thanh : Add Bottom Navigate UI -->
     <com.google.android.material.bottomappbar.BottomAppBar
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
@@ -341,3 +343,4 @@
         app:backgroundTint="#FF3B30" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
+

@@ -1,0 +1,137 @@
+<!--Dao Tuan Duy - 23162011-->
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="4dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?android:attr/selectableItemBackground">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- Product Image -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardImage"
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="0dp"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/ivProduct"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:background="@drawable/bg_gradient_orange"/>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Favorite Button -->
+        <ImageView
+            android:id="@+id/ivFavorite"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/ic_heart"
+            android:background="@drawable/bg_circle_white"
+            android:padding="6dp"
+            android:elevation="4dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="8dp"
+            app:tint="@color/red" />
+
+        <!-- Product Info -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="12dp"
+            app:layout_constraintTop_toBottomOf="@id/cardImage">
+
+            <TextView
+                android:id="@+id/tvName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Beef and Mustard Pie"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="@color/textPrimary"
+                android:maxLines="1"
+                android:ellipsize="end"/>
+
+            <TextView
+                android:id="@+id/tvDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Delicious and freshly prepared"
+                android:textSize="11sp"
+                android:textColor="@color/textSecondary"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:layout_marginTop="4dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="8dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvPrice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="$15.99"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/orange"/>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginTop="2dp">
+
+                        <ImageView
+                            android:layout_width="12dp"
+                            android:layout_height="12dp"
+                            android:src="@drawable/ic_star"
+                            app:tint="@color/yellow" />
+
+                        <TextView
+                            android:id="@+id/tvRating"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="4.5"
+                            android:textSize="11sp"
+                            android:textColor="@color/textSecondary"
+                            android:layout_marginStart="4dp"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/ivAddToCart"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_cart"
+                    android:background="@drawable/bg_gradient_orange"
+                    android:padding="8dp"
+                    app:tint="@android:color/white" />
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

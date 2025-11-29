@@ -47,7 +47,6 @@ public class LoginActivity extends AppCompatActivity {
         // Ánh xạ view
         etEmail = findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.etPassword);
-        tvForgotPassword = findViewById(R.id.tvForgotPassword);
         btnLogin = findViewById(R.id.btnLogin);
         tvSignUp = findViewById(R.id.tvSignUp);
 
@@ -70,11 +69,6 @@ public class LoginActivity extends AppCompatActivity {
 
             doLogin(email, password);
         });
-
-        // Quên mật khẩu (tạm thời để Toast)
-        tvForgotPassword.setOnClickListener(v ->
-                Toast.makeText(LoginActivity.this, "Chức năng quên mật khẩu!", Toast.LENGTH_SHORT).show()
-        );
 
         // Đi tới màn đăng ký
         tvSignUp.setOnClickListener(v -> {

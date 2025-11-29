@@ -1,163 +1,156 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@android:color/white"
-    android:padding="24dp">
+    android:fillViewport="true">
 
-    <!-- Header -->
-    <ImageView
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:src="@drawable/logo"
-        android:layout_gravity="center"
-        android:layout_marginTop="32dp"
-        android:layout_marginBottom="24dp"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Xác thực OTP"
-        android:textSize="28sp"
-        android:textStyle="bold"
-        android:textColor="@color/textPrimary"
-        android:layout_gravity="center"
-        android:layout_marginBottom="8dp"/>
-
-    <TextView
-        android:id="@+id/tv_phone_number"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Mã OTP đã được gửi đến số điện thoại của bạn"
-        android:textSize="16sp"
-        android:textColor="@android:color/darker_gray"
-        android:layout_gravity="center"
-        android:textAlignment="center"
-        android:layout_marginBottom="32dp"/>
-
-    <!-- OTP Input Fields -->
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_gravity="center"
-        android:layout_marginBottom="24dp">
-
-        <EditText
-            android:id="@+id/et_otp_1"
-            android:layout_width="48dp"
-            android:layout_height="56dp"
-            android:layout_marginEnd="8dp"
-            android:background="@drawable/circle_background"
-            android:gravity="center"
-            android:inputType="number"
-            android:maxLength="1"
-            android:textSize="20sp"
-            android:textStyle="bold"/>
-
-        <EditText
-            android:id="@+id/et_otp_2"
-            android:layout_width="48dp"
-            android:layout_height="56dp"
-            android:layout_marginEnd="8dp"
-            android:background="@drawable/circle_background"
-            android:gravity="center"
-            android:inputType="number"
-            android:maxLength="1"
-            android:textSize="20sp"
-            android:textStyle="bold"/>
-
-        <EditText
-            android:id="@+id/et_otp_3"
-            android:layout_width="48dp"
-            android:layout_height="56dp"
-            android:layout_marginEnd="8dp"
-            android:background="@drawable/circle_background"
-            android:gravity="center"
-            android:inputType="number"
-            android:maxLength="1"
-            android:textSize="20sp"
-            android:textStyle="bold"/>
-
-        <EditText
-            android:id="@+id/et_otp_4"
-            android:layout_width="48dp"
-            android:layout_height="56dp"
-            android:layout_marginEnd="8dp"
-            android:background="@drawable/circle_background"
-            android:gravity="center"
-            android:inputType="number"
-            android:maxLength="1"
-            android:textSize="20sp"
-            android:textStyle="bold"/>
-
-        <EditText
-            android:id="@+id/et_otp_5"
-            android:layout_width="48dp"
-            android:layout_height="56dp"
-            android:layout_marginEnd="8dp"
-            android:background="@drawable/circle_background"
-            android:gravity="center"
-            android:inputType="number"
-            android:maxLength="1"
-            android:textSize="20sp"
-            android:textStyle="bold"/>
-
-        <EditText
-            android:id="@+id/et_otp_6"
-            android:layout_width="48dp"
-            android:layout_height="56dp"
-            android:background="@drawable/circle_background"
-            android:gravity="center"
-            android:inputType="number"
-            android:maxLength="1"
-            android:textSize="20sp"
-            android:textStyle="bold"/>
-
-    </LinearLayout>
-
-    <!-- Timer and Resend -->
-    <TextView
-        android:id="@+id/tv_timer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:textColor="@android:color/darker_gray"
-        android:layout_marginBottom="8dp"/>
-
-    <TextView
-        android:id="@+id/tv_resend"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Gửi lại mã"
-        android:textColor="@color/primary_color"
-        android:textStyle="bold"
-        android:layout_gravity="center"
-        android:clickable="true"
-        android:padding="8dp"
-        android:layout_marginBottom="32dp"/>
-
-    <!-- Verify Button -->
-    <Button
-        android:id="@+id/btn_verify"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:text="Xác thực"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:background="@drawable/circle_background"
-        android:backgroundTint="@color/primary_color"
-        android:textColor="@android:color/white"/>
-
-    <!-- Help Text -->
-    <TextView
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Nhập mã OTP: 123456 để demo"
-        android:textSize="12sp"
-        android:textColor="@android:color/darker_gray"
-        android:layout_gravity="center"
-        android:layout_marginTop="16dp"/>
+        android:paddingBottom="32dp">
 
-</LinearLayout>
+        <!-- Decorative Top Wave Background -->
+        <View
+            android:id="@+id/headerBackground"
+            android:layout_width="0dp"
+            android:layout_height="280dp"
+            android:background="@drawable/bg_header_wave"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Title Text -->
+        <TextView
+            android:id="@+id/tvOtpTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="80dp"
+            android:text="Xác thực tài khoản"
+            android:textColor="@android:color/white"
+            android:textSize="32sp"
+            android:textStyle="bold"
+            android:fontFamily="sans-serif-medium"
+            android:letterSpacing="0.02"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvOtpSubtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Nhập mã OTP được gửi đến bạn"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:alpha="0.95"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvOtpTitle" />
+
+        <!-- OTP Form Card -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardOtp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="24dp"
+            app:cardCornerRadius="24dp"
+            app:cardElevation="12dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvOtpSubtitle">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="28dp"
+                android:background="@android:color/white">
+
+                <TextView
+                    android:id="@+id/tvPhoneNumber"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Mã OTP đã được gửi đến số điện thoại của bạn"
+                    android:textSize="16sp"
+                    android:textColor="#666666"
+                    android:layout_gravity="center"
+                    android:textAlignment="center"
+                    android:layout_marginBottom="24dp"/>
+
+                <!-- OTP Input -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilOtp"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Nhập mã OTP"
+                    app:boxStrokeColor="#FF5722"
+                    app:boxStrokeWidth="2dp"
+                    app:hintTextColor="#FF5722"
+                    app:boxCornerRadiusTopStart="12dp"
+                    app:boxCornerRadiusTopEnd="12dp"
+                    app:boxCornerRadiusBottomStart="12dp"
+                    app:boxCornerRadiusBottomEnd="12dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etOtp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:maxLength="6"
+                        android:gravity="center"
+                        android:letterSpacing="0.2"
+                        android:textColor="#333333" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- Timer and Resend -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="16dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tvTimer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Gửi lại mã sau 00:30"
+                        android:textColor="#666666"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/tvResend"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Gửi lại mã"
+                        android:textColor="#FF5722"
+                        android:textStyle="bold"
+                        android:textSize="14sp"
+                        android:paddingStart="8dp"
+                        android:clickable="true"
+                        android:visibility="gone"/>
+                </LinearLayout>
+
+                <!-- Verify Button -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnVerify"
+                    android:layout_width="match_parent"
+                    android:layout_height="58dp"
+                    android:layout_marginTop="28dp"
+                    android:text="Xác thực"
+                    android:textSize="17sp"
+                    android:textStyle="bold"
+                    app:backgroundTint="#FF5722"
+                    app:cornerRadius="29dp"
+                    app:elevation="6dp" />
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

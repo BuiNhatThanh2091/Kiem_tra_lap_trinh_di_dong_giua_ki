@@ -52,4 +52,8 @@ public interface ApiService {
     // 6. Lấy profile
     @GET("api/profile/{userId}")
     Call<User> getProfile(@Path("userId") int userId);
+
+    // 7. Gui lai OTP
+    @POST("api/auth/resend-otp")
+    Call<ApiMessage> resendOtp(@Query("email") String email);
 }

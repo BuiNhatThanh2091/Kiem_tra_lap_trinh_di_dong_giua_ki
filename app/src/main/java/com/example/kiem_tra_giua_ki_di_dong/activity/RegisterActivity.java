@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.kiem_tra_giua_ki_di_dong.R;
 import com.example.kiem_tra_giua_ki_di_dong.model.ApiMessage;
 import com.example.kiem_tra_giua_ki_di_dong.model.RegisterRequest;
-import com.example.kiem_tra_giua_ki_di_dong.remote.ApiClient;
+import com.example.kiem_tra_giua_ki_di_dong.remote.RetrofitClient;
 import com.google.android.material.textfield.TextInputEditText;
 
 import retrofit2.Call;
@@ -28,14 +28,14 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        etFullName = findViewById(R.id.et_full_name);
-        etEmail = findViewById(R.id.et_email);
-        etPassword = findViewById(R.id.et_password);
-        etConfirmPassword = findViewById(R.id.et_confirm_password);
-        etPhone = findViewById(R.id.et_phone);
-        btnRegister = findViewById(R.id.btn_register);
+        etFullName = findViewById(R.id.etFullName);
+        etEmail = findViewById(R.id.etEmail);
+        etPassword = findViewById(R.id.etPassword);
+        etConfirmPassword = findViewById(R.id.etConfirmPassword);
+        etPhone = findViewById(R.id.etPhone);
+        btnRegister = findViewById(R.id.btnRegister);
 
-        findViewById(R.id.tv_login).setOnClickListener(v -> finish());
+        findViewById(R.id.tvSignIn).setOnClickListener(v -> finish());
 
         btnRegister.setOnClickListener(v -> {
             String fullName = etFullName.getText().toString().trim();
@@ -54,15 +54,17 @@ public class RegisterActivity extends AppCompatActivity {
     private void performRegister(String fullName, String email, String password) {
         RegisterRequest request = new RegisterRequest(fullName, email, password);
 
-        ApiClient.getApiService().register(request).enqueue(new Callback<ApiMessage>() {
+        RetrofitClient.getApiService().register(request).enqueue(new Callback<ApiMessage>() {
             @Override
             public void onResponse(Call<ApiMessage> call, Response<ApiMessage> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     if (response.body().isSuccess()) {
                         Toast.makeText(RegisterActivity.this, "Đã gửi mã OTP qua Email!", Toast.LENGTH_LONG).show();
 
+                        // Chuyển sang màn hình nhập OTP
                         Intent intent = new Intent(RegisterActivity.this, OtpVerificationActivity.class);
-                        intent.putExtra("email", email);
+                        intent.putExtra("email", email); // Chỉ cần truyền Email để xác thực
+                        // Có thể truyền thêm sđt nếu muốn hiển thị cho đẹp
                         intent.putExtra("phone", etPhone.getText().toString());
                         startActivity(intent);
                     } else {
@@ -79,7 +81,6 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
     }
-
 
     private boolean validateInput(String fullName, String email, String password, String confirmPassword, String phone) {
         if (fullName.isEmpty()) { etFullName.setError("Nhập họ tên"); return false; }
